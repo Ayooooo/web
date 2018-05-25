@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js">
+</script>
+<script>
+    var url=location.search;
+    var href='http://127.0.0.1:5000/post/'+url.substring(4);
+    var jqxhr = $.ajax(href, {
+        dataType: 'json'
+        }).done(function (data) {
+        json_info = data.post;
+        post=$('.post');
+            var templete = '<p>文章内容为：</p><div class="content">'+json_info['body']+'</div>'
+                +'<div class="time">'+json_info['timestamp']+'</div>';
+            post.append(templete);
+
+       }).fail(function (xhr, status) {
+            ajaxLog('失败: ' + xhr.status + ', 原因: ' + status);
+        });
+</script>
+</head>
+<body>
+<div class="post">
+    <p>HELLO</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js">
+</script>
+<script>
+    var jqxhr = $.ajax('http://127.0.0.1:5000/post', {
+        dataType: 'json'
+        }).done(function (data) {
+            json_info = data.posts;
+            var i=0;
+            posts=$('.posts');
+            while(json_info[i])
+            {
+                var templete = '<p>文章内容为：</p><div class="content">'+json_info[i]['body']+'</div>'
+                    +'<div class="time">'+json_info[i]['timestamp']+'</div>'+'<a href="http://127.0.0.1:5000/static/post.html?id='+escape(json_info[i]['id'])+'">查看详情页</a>';
+                posts.append(templete);
+                i++;
+            }
+            }).fail(function (xhr, status) {
+                ajaxLog('失败: ' + xhr.status + ', 原因: ' + status);
+            });
+</script>
+</head>
+<body>
+<div class="posts">
+<p>文章列表如下：</p>
+</div>
+</body>
+</html>

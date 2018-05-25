@@ -1,0 +1,39 @@
+{% extends "BASE1.html" %}
+
+{% block head %}
+    <meta charset="UTF-8">
+    <title>Flasky{% block title %}{% endblock %}</title>
+    <script>{% block script %}{% endblock %}</script>
+    <style type="text/css">
+    </style>
+{% endblock %}
+
+{% block navbar %}
+<div class="navbar navbar-inverse" role="navigation">
+    <div class="container">
+        <div class="navbar-collapse collapse" >
+            <ul id="nav" class="nav navbar-nav">
+                <li><a href="/">     Home     </a> </li>
+                {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('main.user',username=current_user.username) }}">     Profile     </a></li>
+                <li><a href="{{ url_for('auth.logout') }}">     Sign Out     </a></li>
+                {% else %}
+                <li><a href="{{ url_for('auth.login') }}">     Sign In     </a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% block page_content %}{% endblock %}
+</div>
+{% endblock %}
